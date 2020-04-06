@@ -1,25 +1,41 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+
+import Cabecalho from './componentes/cabecalho';
+import Conteudo from './componentes/conteudo';
+import FormProdutos from './componentes/produtos/form';
+import ListarProdutos from './componentes/produtos/listar';
+import VisualizarProduto from './componentes/produtos/visualizar';
+import NaoEncontrada from './componentes/naoencontrada';
+
+import Container from 'react-bootstrap/Container';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Cabecalho/>
+      <Container>
+        <Switch>
+          <Route path="/" exact={true}><Conteudo/></Route>
+          <Route path="/produtos/" exact={true}>
+            <ListarProdutos/>
+          </Route>
+          <Route path="/produtos/novo"><FormProdutos/></Route>
+          <Route path="/produtos/editar/:idProduto">
+            <FormProdutos/>
+          </Route>
+          <Route path="/produtos/:idProduto">
+            <VisualizarProduto/>
+          </Route>
+          <Route path="*"><NaoEncontrada/></Route>
+        </Switch>
+      </Container>
+    </Router>
   );
 }
 
